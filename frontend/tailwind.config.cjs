@@ -8,7 +8,8 @@ module.exports = {
         extend: {
             colors: {
                 'ownGray': '#726E75',
-                'ownGreen': '#3FA34D',
+                'ownGreen': '#0FBD3A',
+                'ownGreenHover': '#188132',
                 'ownBlue': '#2E5EAA',
                 'ownBlueHover': '#2A497A'
             },

@@ -14,21 +14,19 @@ function App() {
 
     return (
         <div className='font-montserrat'>
-            <Navbar/>
-            <div className='h-screen'>
-                <Routes>
-                    {!user ? <>
-                            <Route path='/login' element={<Login/>}/>
-                            {/*<Route path='/register' element={<Register/>}/>*/}
-                        </>
-                        : <>
-                            <Route path='/test' element={<Test/>}/>
-                        </>
-                    }
+        <Navbar/>
+            <Routes>
+                {!user ? <>
+                        <Route path='/login' element={<Login/>}/>
+                        {/*<Route path='/register' element={<Register/>}/>*/}
+                    </>
+                    : <>
+                        <Route path='/test' element={<Test/>}/>
+                    </>
+                }
 
-                    <Route path='/*' element={<Home/>}/>
-                </Routes>
-            </div>
+                <Route path='/*' element={<Home/>}/>
+            </Routes>
         </div>
     )
 

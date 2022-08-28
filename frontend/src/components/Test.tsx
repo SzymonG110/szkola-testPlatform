@@ -1,4 +1,6 @@
 import {ChangeEvent, useEffect, useState} from 'react'
+import x from '../assets/x.svg'
+import v from '../assets/v.svg'
 
 interface QuestionType {
 
@@ -46,7 +48,6 @@ const Test = () => {
         if (!checkIfAnswer()) return
 
         setEnd(true)
-        showAnswers()
 
     }
 
@@ -86,33 +87,30 @@ const Test = () => {
 
     }
 
-    const showAnswers = () => {
-
-        const userAnswers = answers
-
-    }
-
     return (
         <div>
             {!end && questions.length !== 0 ? (
                 <>
-                    <div>{questions[index].title}</div>
+                    <div className='font-semibold'>Pytanie: {questions[index].title}</div>
                     {questions[index].answers.map(a => (
-                        <div>
+                        <div className=''>
                             <input type='radio' name={`answer${index}`} value={a.answer} onChange={saveAnswer}
-                                   checked={typeof checked === "boolean" ? checked : checked === a.answer}/>
-                            <div>{a.answer}</div>
+                                   checked={typeof checked === "boolean" ? checked : checked === a.answer}/> {a.answer}
                         </div>
                     ))}
 
                     {questions.length - 1 === index ? (
-                        <button onClick={handleEndTest}>Zakończ test</button>
+                        <button onClick={handleEndTest}
+                                className='cursor-pointer bg-ownGreen hover:bg-ownGreenHover duration-500 rounded-2xl py-2 px-3 hover:text-white'>Zakończ
+                            test</button>
                     ) : (
-                        <button onClick={handleNextQuestion}>Następne pytanie</button>
+                        <button onClick={handleNextQuestion}
+                                className='cursor-pointer bg-ownGreen hover:bg-ownGreenHover duration-500 rounded-2xl py-2 px-3 hover:text-white'>Następne
+                            pytanie</button>
                     )}
 
                     {error && (
-                        <div>Error: {error}</div>
+                        <div className='font-extrabold text-red-500'>Error: {error}</div>
                     )}
                 </>
             ) : !end && (<div>Ładowanie pytań</div>)}
@@ -121,13 +119,22 @@ const Test = () => {
                 <>
                     {questions.map(q => (
                         <>
-                            <h2>{q.title}</h2>
+                            <div className='font-semibold'>Pytanie: {q.title}</div>
                             <div>
                                 {q.answers.map(a => (
-                                    <>
-                                        <div>{a.answer}</div>
-                                        <div>{a.correct ? 'Dobra' : 'Zła'}</div>
-                                    </>
+                                    <div className='block'>
+                                        {a.correct ? (
+                                            <div className='text-ownGreen inline-flex'>
+                                                <img src={v} alt="V" />
+                                                {a.answer}
+                                            </div>
+                                        ) : (
+                                            <div className='text-red-500 inline-flex'>
+                                                <img src={x} alt="X" />
+                                                {a.answer}
+                                            </div>
+                                        )}
+                                    </div>
                                 ))}
                             </div>
                             <br/>
