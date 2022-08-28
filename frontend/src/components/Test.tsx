@@ -115,9 +115,7 @@ const Test = () => {
                         <div>Error: {error}</div>
                     )}
                 </>
-            ) : !end && (
-                <div>Ładowanie pytań</div>
-            )}
+            ) : !end && (<div>Ładowanie pytań</div>)}
 
             {end && (
                 <>

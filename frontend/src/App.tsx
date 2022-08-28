@@ -13,20 +13,22 @@ function App() {
     console.log(user)
 
     return (
-        <div>
+        <div className='font-montserrat'>
             <Navbar/>
-            <Routes>
-                {!user ? <>
-                        <Route path='/login' element={<Login/>}/>
-                        {/*<Route path='/register' element={<Register/>}/>*/}
-                    </>
-                    : <>
-                        <Route path='/test' element={<Test/>}/>
-                    </>
-                }
+            <div className='h-screen'>
+                <Routes>
+                    {!user ? <>
+                            <Route path='/login' element={<Login/>}/>
+                            {/*<Route path='/register' element={<Register/>}/>*/}
+                        </>
+                        : <>
+                            <Route path='/test' element={<Test/>}/>
+                        </>
+                    }
 
-                <Route path='/*' element={<Home/>}/>
-            </Routes>
+                    <Route path='/*' element={<Home/>}/>
+                </Routes>
+            </div>
         </div>
     )
 
