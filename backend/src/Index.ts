@@ -29,6 +29,8 @@ export class Index {
             resave: true,
             saveUninitialized: true
         }))
+
+        //@ts-ignore
         this.app.use(cors())
 
     }

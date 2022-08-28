@@ -7,7 +7,7 @@ const Login = () => {
 
     const loginRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
-    const [error, setError] = useState('')
+    const [error, setError] = useState<string>('')
     const [user, setUser] = useRecoilState(userState)
     const navigate = useNavigate()
 
@@ -40,6 +40,7 @@ const Login = () => {
                 Login: <input type='text' ref={loginRef}/> <br />
                 Hasło: <input type='password' ref={passwordRef}/> <br />
                 <input type='submit'/>
+
                 {error && (
                     <div>Błąd: {error}</div>
                 )}
