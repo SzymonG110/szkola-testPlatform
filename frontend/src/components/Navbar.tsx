@@ -17,8 +17,12 @@ const Navbar = () => {
             </div>
 
             <div className='flex justify-end w-full'>
-                {!user && (<Link className='cursor-pointer hover:text-ownBlueHover duration-500' to='/login'>Zaloguj
-                    się</Link>)}
+                {!user && (
+                    <div className='space-x-5'>
+                        <Link className='cursor-pointer hover:text-ownBlueHover duration-500' to='/register'>Zarejestruj się</Link>
+                        <Link className='cursor-pointer hover:text-ownBlueHover duration-500' to='/login'>Zaloguj się</Link>
+                    </div>
+                )}
                 {user && (<div className='cursor-pointer hover:text-ownBlueHover duration-500' onClick={logout}>Wyloguj
                     się</div>)}
             </div>

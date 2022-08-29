@@ -3,10 +3,11 @@ import {useNavigate} from 'react-router-dom'
 import {useRecoilState} from 'recoil'
 import userState from '../atoms/userState'
 
-const Login = () => {
+const Register = () => {
 
     const loginRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
+    const confirmPasswordRef = useRef<HTMLInputElement>(null)
     const [error, setError] = useState<string>('')
     const [user, setUser] = useRecoilState(userState)
     const navigate = useNavigate()
@@ -18,7 +19,7 @@ const Login = () => {
         if (!loginRef.current?.value || !passwordRef.current?.value) return setError('Uzupełnij pola')
         setError('')
 
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/user/login`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/user/register`, {
 
             method: 'post',
             headers: {
@@ -31,7 +32,9 @@ const Login = () => {
 
         })
 
-        if (res.status != 200) return setError('Błędne dane')
+        if (res.status == 409) return setError('Użytkownik o danym loginie już istnieje')
+        else if (res.status == 403) return setError('Login bądź hasło jest zbyt krótkie')
+        else if (res.status != 200) return setError('Błędne dane')
         setUser((await res.clone().json()).username)
         navigate('/')
 
@@ -46,6 +49,10 @@ const Login = () => {
                 Hasło: <input type='password' ref={passwordRef}
                               className='border border-gray-300 block bg-gray-50 rounded-xl px-1' placeholder='Hasło'/>
                 <br/>
+                Potwierdź hasło: <input type='password' ref={confirmPasswordRef}
+                                        className='border border-gray-300 block bg-gray-50 rounded-xl px-1'
+                                        placeholder='Hasło'/>
+                <br/>
                 <input type='submit'
                        className='font-extrabold ml-2 bg-ownGreen hover:bg-ownGreenHover py-2 px-3 rounded-xl text-black transition-colors duration-500'/>
 
@@ -56,4 +63,4 @@ const Login = () => {
 
 }
 
-export default Login
+export default Register

@@ -35,7 +35,7 @@ declare module 'express-session' {
 
     interface SessionData {
 
-        user: UserType
+        user: Omit<UserType, 'password'>
 
         [x: string]: any
 
@@ -51,6 +51,7 @@ export default abstract class Route {
         method: 'get' | 'post'
         permissions?: Permissions[]
         mustLogged?: boolean
+        body?: string[]
         run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput>
 
     }[] = []

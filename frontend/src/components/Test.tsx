@@ -93,7 +93,7 @@ const Test = () => {
                     {questions[index].answers.map(a => (
                         <div className=''>
                             <input type='radio' name={`answer${index}`} value={a.answer} onChange={saveAnswer}
-                                   checked={typeof checked === "boolean" ? checked : checked === a.answer}/> {a.answer}
+                                   checked={typeof checked === 'boolean' ? checked : checked === a.answer}/> {a.answer}
                         </div>
                     ))}
 
@@ -126,29 +126,29 @@ const Test = () => {
                                     <div className='block'>
                                         {a.correct ? (
                                             <div className='text-ownGreen inline-flex'>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                     stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          d="M4.5 12.75l6 6 9-13.5"/>
+                                                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
+                                                     stroke-width='1.5' stroke='currentColor' className='w-6 h-6'>
+                                                    <path stroke-linecap='round' stroke-linejoin='round'
+                                                          d='M4.5 12.75l6 6 9-13.5'/>
                                                 </svg>
                                                 {a.answer}
                                             </div>
                                         ) : answers[mapIndex].answer !== questions[mapIndex].answers.find(a => a.correct)?.answer ? (
                                             <div className='text-red-500 inline-flex'>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                     stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          d="M6 18L18 6M6 6l12 12"/>
+                                                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
+                                                     stroke-width='1.5' stroke='currentColor' className='w-6 h-6'>
+                                                    <path stroke-linecap='round' stroke-linejoin='round'
+                                                          d='M6 18L18 6M6 6l12 12'/>
                                                 </svg>
                                                 {a.answer}
                                             </div>
                                         ) : (
                                             <div className='inline-flex'>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                     stroke-width="1.5" stroke="currentColor"
-                                                     className="w-6 h-6 text-red-500   ">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          d="M6 18L18 6M6 6l12 12"/>
+                                                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
+                                                     stroke-width='1.5' stroke='currentColor'
+                                                     className='w-6 h-6 text-red-500   '>
+                                                    <path stroke-linecap='round' stroke-linejoin='round'
+                                                          d='M6 18L18 6M6 6l12 12'/>
                                                 </svg>
                                                 {a.answer}
                                             </div>
