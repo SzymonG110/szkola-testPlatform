@@ -115,6 +115,9 @@ const Test = () => {
 
             {end && (
                 <>
+                    <div>Odpowiedzi poprawne: <div
+                        className={(answers.filter((a, filterIndex) => a.answer === questions[filterIndex].answers.find(a => a.correct)?.answer).length / questions.length * 100 >= 50 ? 'text-ownGreen' : 'text-red-500') + ' inline font-semibold'}>{answers.filter((a, filterIndex) => a.answer === questions[filterIndex].answers.find(a => a.correct)?.answer).length}/{questions.length}</div>
+                    </div>
                     {questions.map((q, mapIndex) => (
                         <>
                             <div className='font-semibold'>Pytanie: {q.title}</div>
@@ -142,7 +145,8 @@ const Test = () => {
                                         ) : (
                                             <div className='inline-flex'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                     stroke-width="1.5" stroke="currentColor" className="w-6 h-6 text-red-500   ">
+                                                     stroke-width="1.5" stroke="currentColor"
+                                                     className="w-6 h-6 text-red-500   ">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                           d="M6 18L18 6M6 6l12 12"/>
                                                 </svg>

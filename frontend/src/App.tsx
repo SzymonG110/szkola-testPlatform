@@ -10,7 +10,6 @@ import userState from './atoms/userState'
 function App() {
 
     const [user, setUser] = useRecoilState(userState)
-    console.log(user)
 
     return (
         <div className='font-montserrat'>
