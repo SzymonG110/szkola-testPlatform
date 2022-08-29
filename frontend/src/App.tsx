@@ -1,13 +1,14 @@
 import {useEffect} from 'react'
 import {Route, Routes} from 'react-router-dom'
 import {useRecoilState} from 'recoil'
+import {useCookies} from 'react-cookie'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
 import Test from './components/Test'
 import userState from './atoms/userState'
-import {useCookies} from 'react-cookie'
+import Questions from './components/Questions'
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
                     </>
                     : <>
                         <Route path='/test' element={<Test/>}/>
+                        <Route path='/questions' element={<Questions/>}/>
                     </>
                 }
 

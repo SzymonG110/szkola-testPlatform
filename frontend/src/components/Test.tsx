@@ -1,21 +1,5 @@
 import {ChangeEvent, useEffect, useState} from 'react'
-
-interface QuestionType {
-
-    title: string
-    answers: {
-        answer: string
-        correct: boolean
-    }[]
-    authorId: number
-
-}
-
-interface AnswerType {
-    index: number
-    title: string
-    answer: string
-}
+import {AnswerType, QuestionType} from '../interfaces/Question'
 
 const Test = () => {
 
