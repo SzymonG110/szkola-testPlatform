@@ -1,10 +1,12 @@
+export interface AnswerType {
+    answer: string
+    correct: boolean
+}
+
 export default interface QuestionType {
 
-    title: string
-    answers: {
-        answer: string
-        correct: boolean
-    }[]
+    question: string
+    answers: AnswerType[]
     authorId: number
 
 }

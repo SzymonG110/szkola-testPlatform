@@ -1,6 +1,6 @@
 export interface QuestionType {
 
-    title: string
+    question: string
     answers: {
         answer: string
         correct: boolean

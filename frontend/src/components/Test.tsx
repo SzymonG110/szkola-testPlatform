@@ -53,7 +53,7 @@ const Test = () => {
             const newAnswers = answers.filter(a => a.index !== index)
             newAnswers.push({
                 index,
-                title: questions[index].title,
+                title: questions[index].question,
                 answer: e.target.value
             })
             setAnswers(newAnswers)
@@ -62,7 +62,7 @@ const Test = () => {
             newAnswers.push({
                 index,
                 answer: e.target.value,
-                title: questions[index].title
+                title: questions[index].question
             })
             setAnswers(newAnswers)
         }
@@ -73,7 +73,7 @@ const Test = () => {
         <div>
             {!end && questions.length !== 0 ? (
                 <>
-                    <div className='font-semibold'>Pytanie: {questions[index].title}</div>
+                    <div className='font-semibold'>Pytanie: {questions[index].question}</div>
                     {questions[index].answers.map((a, mapIndex) => (
                         <div key={mapIndex}>
                             <input type='radio' name={`answer${index}`} value={a.answer} onChange={saveAnswer}
@@ -104,7 +104,7 @@ const Test = () => {
                     </div>
                     {questions.map((q, mapIndex) => (
                         <div key={mapIndex}>
-                            <div className='font-semibold'>Pytanie: {q.title}</div>
+                            <div className='font-semibold'>Pytanie: {q.question}</div>
                             <div>
                                 {q.answers.map((a, i) => (
                                     <div className='block' key={i}>
