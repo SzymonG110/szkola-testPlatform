@@ -15,8 +15,8 @@ export default class extends Route {
 
             method: 'post',
             body: [
-                'username string',
-                'password string'
+                '[string] username',
+                '[string] password'
             ],
             async run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput> {
 
@@ -34,8 +34,10 @@ export default class extends Route {
                         username: req.body.username,
                         token: await new TokenUtil().generate({
                             userId: data.userId,
-                            username: data.username
-                        })
+                            username: data.username,
+                            admin: data.admin
+                        }),
+                        admin: data.admin
                     }
 
                 }

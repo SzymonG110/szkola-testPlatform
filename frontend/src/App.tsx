@@ -31,26 +31,31 @@ function App() {
                 })
 
             })
-            res.status === 200 && setUser((await res.json()).username)
+
+            const json = await res.json()
+            res.status === 200 && setUser({
+                username: json.username,
+                admin: json.admin
+            })
 
         })()
 
-    }, []);
+    }, [])
 
     return (
         <div className='font-montserrat'>
             <Navbar/>
             <Routes>
-                {!user ? <>
+                {!user.username ? <>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register' element={<Register/>}/>
                     </>
                     : <>
                         <Route path='/test' element={<Test/>}/>
-                        <Route path='/questions' element={<Questions/>}/>
                     </>
                 }
 
+                <Route path='/questions' element={<Questions/>}/>
                 <Route path='/*' element={<Home/>}/>
             </Routes>
         </div>

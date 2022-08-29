@@ -2,5 +2,8 @@ import {atom} from 'recoil'
 
 export default atom({
     key: 'userState',
-    default: undefined
+    default: {
+        username: undefined,
+        admin: false
+    }
 })

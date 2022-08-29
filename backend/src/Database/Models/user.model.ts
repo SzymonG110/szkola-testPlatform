@@ -13,6 +13,10 @@ const userModel = model<UserType>('user', new Schema({
 
     password: {
         type: String, required: true
+    },
+
+    admin: {
+        type: Boolean, default: false
     }
 
 }))

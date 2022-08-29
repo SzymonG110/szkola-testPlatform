@@ -1,6 +1,7 @@
 import {readdirSync} from 'fs'
 import {Application, NextFunction, Request, Response} from 'express'
 import Route, {RouteOutput} from './Types/Route.type'
+import TokenUtil from './Utils/Token.util'
 
 export default class Handler {
 
@@ -50,8 +51,27 @@ export default class Handler {
             routes.methods.forEach(route => {
                 this.app[route.method](routes.route, async (req: Request, res: Response, next: NextFunction) => {
 
-                        if (route.mustLogged && !req.session.user)
-                            return res.status(401).json({message: 'Unauthorized.'})
+                        if (route.mustLogged && !req.session.user) {
+                            if (!req.body.token)
+                                return res.status(401).json({message: 'Unauthorized.'})
+
+                            req.session.user = {
+                                ...await new TokenUtil().decrypt(req.body.token),
+                                token: req.body.token
+                            }
+                        }
+
+                        if (route.body && route.body.length > 0) {
+                            let block = false
+                            route.body.forEach(b => {
+                                if (b.startsWith('?')) return
+                                if (!req.body[b.split(' ')[1]]) block = true
+                            })
+                            if (block) return res.status(400).json({
+                                message: 'Missing data in body',
+                                body: route.body
+                            })
+                        }
 
                         const output: RouteOutput = await route.run(req, res, next)
 

@@ -13,7 +13,7 @@ export default class extends Route {
 
             method: 'post',
             body: [
-                'token string'
+                '[string] token'
             ],
             async run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput> {
 

@@ -34,11 +34,15 @@ const Register = () => {
 
         })
 
+        const json = await res.json()
         if (res.status === 409) return setError('Użytkownik o danym loginie już istnieje')
         else if (res.status === 403) return setError('Login bądź hasło jest zbyt krótkie')
         else if (res.status !== 200) return setError('Błędne dane')
-        setUser((await res.clone().json()).username)
-        setCookie('token', (await res.clone().json()).token)
+        setUser({
+            username: json.username,
+            admin: false
+        })
+        setCookie('token', json.token)
         navigate('/')
 
     }

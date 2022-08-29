@@ -16,7 +16,7 @@ const Questions = () => {
     return (
         <div>
             {questions.map((q, index) => (
-                <div>
+                <div key={index}>
                     <div className='font-semibold'>Pytanie: {q.title}</div>
                     <div>Odpowiedź: {q.answers.find(a => a.correct)?.answer}</div>
                 </div>

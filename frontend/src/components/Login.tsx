@@ -33,9 +33,13 @@ const Login = () => {
 
         })
 
+        const json = await res.json()
         if (res.status !== 200) return setError('Błędne dane')
-        setUser((await res.clone().json()).username)
-        setCookie('token', (await res.clone().json()).token)
+        setUser({
+            username: json.username,
+            admin: json.admin
+        })
+        setCookie('token', json.token)
         navigate('/')
 
     }
