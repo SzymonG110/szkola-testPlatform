@@ -35,7 +35,7 @@ declare module 'express-session' {
 
     interface SessionData {
 
-        user: Omit<UserType, 'password'>
+        user: Omit<UserType, 'password'> & {token: string}
 
         [x: string]: any
 

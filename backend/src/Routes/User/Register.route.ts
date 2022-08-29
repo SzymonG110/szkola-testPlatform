@@ -1,7 +1,8 @@
 import {NextFunction, Request, Response} from 'express'
 import Route, {RouteOutput} from '../../Types/Route.type'
-import userModel from '../../database/models/user.model'
+import userModel from '../../Database/Models/user.model'
 import {hash} from 'bcrypt'
+import TokenUtil from '../../Utils/Token.util'
 
 export default class extends Route {
 
@@ -43,7 +44,11 @@ export default class extends Route {
 
                     req.session.user = {
                         userId,
-                        username: req.body.username
+                        username: req.body.username,
+                        token: await new TokenUtil().generate({
+                            userId: userId,
+                            username: req.body.username
+                        })
                     }
 
                 }

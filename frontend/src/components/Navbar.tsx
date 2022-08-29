@@ -1,13 +1,16 @@
 import {Link} from 'react-router-dom'
 import {useRecoilState} from 'recoil'
 import userState from '../atoms/userState'
+import {useCookies} from 'react-cookie'
 
 const Navbar = () => {
 
     const [user, setUser] = useRecoilState(userState)
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
 
     const logout = () => {
         setUser(undefined)
+        removeCookie('token')
     }
 
     return (

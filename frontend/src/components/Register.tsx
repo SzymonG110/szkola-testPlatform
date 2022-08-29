@@ -2,6 +2,7 @@ import {SyntheticEvent, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useRecoilState} from 'recoil'
 import userState from '../atoms/userState'
+import {useCookies} from 'react-cookie'
 
 const Register = () => {
 
@@ -10,6 +11,7 @@ const Register = () => {
     const confirmPasswordRef = useRef<HTMLInputElement>(null)
     const [error, setError] = useState<string>('')
     const [user, setUser] = useRecoilState(userState)
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const navigate = useNavigate()
 
     const handleSubmit = async (e: SyntheticEvent) => {
@@ -32,10 +34,11 @@ const Register = () => {
 
         })
 
-        if (res.status == 409) return setError('Użytkownik o danym loginie już istnieje')
-        else if (res.status == 403) return setError('Login bądź hasło jest zbyt krótkie')
-        else if (res.status != 200) return setError('Błędne dane')
+        if (res.status === 409) return setError('Użytkownik o danym loginie już istnieje')
+        else if (res.status === 403) return setError('Login bądź hasło jest zbyt krótkie')
+        else if (res.status !== 200) return setError('Błędne dane')
         setUser((await res.clone().json()).username)
+        setCookie('token', (await res.clone().json()).token)
         navigate('/')
 
     }

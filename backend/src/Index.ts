@@ -2,7 +2,7 @@ import ex from 'express'
 import es from 'express-session'
 import Handler from './Handler'
 import cors from 'cors'
-import IndexDatabase from './database/Index.database'
+import IndexDatabase from './Database/Index.database'
 
 export class Index {
 
@@ -24,7 +24,7 @@ export class Index {
         this.app.use(ex.json())
         this.app.use(ex.urlencoded({extended: false}))
         this.app.use(es({
-            secret: `${this.secret}`,
+            secret: this.secret,
             cookie: {
                 maxAge: 60 * 60 * 1000 //60 min
             },
@@ -32,6 +32,7 @@ export class Index {
             saveUninitialized: true
         }))
         this.app.use(cors())
+
         this.app.use((req, res, next) => {
             console.log(req.url)
             console.log(req.body)

@@ -1,7 +1,8 @@
 import {NextFunction, Request, Response} from 'express'
 import Route, {RouteOutput} from '../../Types/Route.type'
-import userModel from '../../database/models/user.model'
+import userModel from '../../Database/Models/user.model'
 import {compare} from 'bcrypt'
+import TokenUtil from '../../Utils/Token.util'
 
 export default class extends Route {
 
@@ -30,30 +31,13 @@ export default class extends Route {
 
                     req.session.user = {
                         userId: data.userId,
-                        username: req.body.username
+                        username: req.body.username,
+                        token: await new TokenUtil().generate({
+                            userId: data.userId,
+                            username: data.username
+                        })
                     }
 
-                }
-
-                return {
-                    success: {
-                        ...req.session.user
-                    }
-                }
-
-            }
-
-        })
-
-        this.methods.push({
-
-            method: 'get',
-            async run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput> {
-                console.log(req.session.user)
-                if (!req.session.user?.userId) return {
-                    error: {
-                        code: 401, message: 'Unauthorized'
-                    }
                 }
 
                 return {

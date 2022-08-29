@@ -90,8 +90,8 @@ const Test = () => {
             {!end && questions.length !== 0 ? (
                 <>
                     <div className='font-semibold'>Pytanie: {questions[index].title}</div>
-                    {questions[index].answers.map(a => (
-                        <div className=''>
+                    {questions[index].answers.map((a, mapIndex) => (
+                        <div key={mapIndex}>
                             <input type='radio' name={`answer${index}`} value={a.answer} onChange={saveAnswer}
                                    checked={typeof checked === 'boolean' ? checked : checked === a.answer}/> {a.answer}
                         </div>
@@ -119,11 +119,11 @@ const Test = () => {
                         className={(answers.filter((a, filterIndex) => a.answer === questions[filterIndex].answers.find(a => a.correct)?.answer).length / questions.length * 100 >= 50 ? 'text-ownGreen' : 'text-red-500') + ' inline font-semibold'}>{answers.filter((a, filterIndex) => a.answer === questions[filterIndex].answers.find(a => a.correct)?.answer).length}/{questions.length}</div>
                     </div>
                     {questions.map((q, mapIndex) => (
-                        <>
+                        <div key={mapIndex}>
                             <div className='font-semibold'>Pytanie: {q.title}</div>
                             <div>
-                                {q.answers.map(a => (
-                                    <div className='block'>
+                                {q.answers.map((a, i) => (
+                                    <div className='block' key={i}>
                                         {a.correct ? (
                                             <div className='text-ownGreen inline-flex'>
                                                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
@@ -156,7 +156,7 @@ const Test = () => {
                                     </div>
                                 ))}
                             </div>
-                        </>
+                        </div>
                     ))}
                 </>
             )}

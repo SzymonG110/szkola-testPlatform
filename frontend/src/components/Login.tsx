@@ -2,12 +2,14 @@ import {SyntheticEvent, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useRecoilState} from 'recoil'
 import userState from '../atoms/userState'
+import {useCookies} from 'react-cookie'
 
 const Login = () => {
 
     const loginRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const [error, setError] = useState<string>('')
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const [user, setUser] = useRecoilState(userState)
     const navigate = useNavigate()
 
@@ -31,8 +33,9 @@ const Login = () => {
 
         })
 
-        if (res.status != 200) return setError('Błędne dane')
+        if (res.status !== 200) return setError('Błędne dane')
         setUser((await res.clone().json()).username)
+        setCookie('token', (await res.clone().json()).token)
         navigate('/')
 
     }
