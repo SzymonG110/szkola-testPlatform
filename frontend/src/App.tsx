@@ -9,6 +9,7 @@ import Register from './components/Register'
 import Test from './components/Test'
 import userState from './atoms/userState'
 import Questions from './components/Questions'
+import Panel from './components/Panel'
 
 function App() {
 
@@ -19,7 +20,6 @@ function App() {
 
         (async () => {
 
-            if (!cookies) return
             const res = await fetch(`${import.meta.env.VITE_API_URL}/user/decrypt`, {
 
                 method: 'post',
@@ -52,6 +52,7 @@ function App() {
                     </>
                     : <>
                         <Route path='/test' element={<Test/>}/>
+                        {user.admin && (<Route path='/panel' element={<Panel/>}/>)}
                     </>
                 }
 

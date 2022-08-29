@@ -1,6 +1,7 @@
 import {NextFunction, Request, Response} from 'express'
 import Route, {RouteOutput} from '../../Types/Route.type'
 import TokenUtil from '../../Utils/Token.util'
+import userModel from '../../Database/Models/user.model'
 
 export default class extends Route {
 
@@ -18,9 +19,14 @@ export default class extends Route {
             async run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput> {
 
                 try {
+                    const decrypted = await new TokenUtil().decrypt(req.body.token)
+                    const data = await userModel.findOne({userId: decrypted.userId})
+
                     return {
                         success: {
-                            ...await new TokenUtil().decrypt(req.body.token)
+                            userId: data?.userId,
+                            username: data?.username,
+                            admin: data?.admin
                         }
                     }
                 } catch (e) {

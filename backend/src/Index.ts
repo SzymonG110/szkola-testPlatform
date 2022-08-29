@@ -33,7 +33,7 @@ export class Index {
         }))
         this.app.use(cors())
 
-        this.app.use((req, res, next) => {
+        process.argv.includes('--debug') && this.app.use((req, res, next) => {
             console.log(req.url)
             console.log(req.body)
             next()
