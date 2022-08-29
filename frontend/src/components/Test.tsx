@@ -1,6 +1,4 @@
 import {ChangeEvent, useEffect, useState} from 'react'
-import x from '../assets/x.svg'
-import v from '../assets/v.svg'
 
 interface QuestionType {
 
@@ -110,14 +108,14 @@ const Test = () => {
                     )}
 
                     {error && (
-                        <div className='font-extrabold text-red-500'>Error: {error}</div>
+                        <div className='font-extrabold text-red-500'>Błąd: {error}</div>
                     )}
                 </>
             ) : !end && (<div>Ładowanie pytań</div>)}
 
             {end && (
                 <>
-                    {questions.map(q => (
+                    {questions.map((q, mapIndex) => (
                         <>
                             <div className='font-semibold'>Pytanie: {q.title}</div>
                             <div>
@@ -125,21 +123,35 @@ const Test = () => {
                                     <div className='block'>
                                         {a.correct ? (
                                             <div className='text-ownGreen inline-flex'>
-                                                <img src={v} alt="V" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="M4.5 12.75l6 6 9-13.5"/>
+                                                </svg>
+                                                {a.answer}
+                                            </div>
+                                        ) : answers[mapIndex].answer !== questions[mapIndex].answers.find(a => a.correct)?.answer ? (
+                                            <div className='text-red-500 inline-flex'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="M6 18L18 6M6 6l12 12"/>
+                                                </svg>
                                                 {a.answer}
                                             </div>
                                         ) : (
-                                            <div className='text-red-500 inline-flex'>
-                                                <img src={x} alt="X" />
+                                            <div className='inline-flex'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5" stroke="currentColor" className="w-6 h-6 text-red-500   ">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="M6 18L18 6M6 6l12 12"/>
+                                                </svg>
                                                 {a.answer}
                                             </div>
                                         )}
                                     </div>
                                 ))}
                             </div>
-                            <br/>
-                            <br/>
-                            <br/>
                         </>
                     ))}
                 </>
