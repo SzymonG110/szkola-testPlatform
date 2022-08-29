@@ -3,7 +3,6 @@ import userState from '../atoms/userState'
 import {useCookies} from 'react-cookie'
 import {useEffect, useState} from 'react'
 import AddQuestion from './AddQuestion'
-import gsap from 'gsap'
 
 const Panel = () => {
 
@@ -39,7 +38,7 @@ const Panel = () => {
 
     const handleModalOpen = () => {
 
-        gsap.to('#modalAddQuestion', {display: 'grid', opacity: 1})
+        document.getElementById('modalAddQuestion')?.classList.remove('hidden')
 
     }
 
