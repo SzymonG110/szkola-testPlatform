@@ -51,6 +51,7 @@ export default abstract class Route {
         method: 'get' | 'post'
         permissions?: Permissions[]
         mustLogged?: boolean
+        admin?: boolean
         body?: string[]
         run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput>
 

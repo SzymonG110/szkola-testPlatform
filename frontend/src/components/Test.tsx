@@ -1,5 +1,6 @@
 import {ChangeEvent, useEffect, useState} from 'react'
 import {AnswerType, QuestionType} from '../interfaces/Question'
+import fetchUtil from '../utils/fetch'
 
 const Test = () => {
 
@@ -13,7 +14,11 @@ const Test = () => {
     useEffect(() => {
 
         (async () => {
-            setQuestions((await (await fetch(`${import.meta.env.VITE_API_URL}/test/questions`)).json()).drawn)
+
+            setQuestions((await fetchUtil('test/questions', {
+                method: 'get'
+            })).json.drawn)
+
         })()
 
     }, [])

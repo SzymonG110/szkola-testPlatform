@@ -1,8 +1,9 @@
-import {SyntheticEvent, useRef, useState} from 'react'
+import {FormEvent, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useRecoilState} from 'recoil'
 import userState from '../atoms/userState'
 import {useCookies} from 'react-cookie'
+import fetchUtil from '../utils/fetch'
 
 const Register = () => {
 
@@ -14,35 +15,29 @@ const Register = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const navigate = useNavigate()
 
-    const handleSubmit = async (e: SyntheticEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
 
         if (!loginRef.current?.value || !passwordRef.current?.value) return setError('Uzupełnij pola')
         setError('')
 
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/user/register`, {
-
+        const res = await fetchUtil('user/register', {
             method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            body: {
                 username: loginRef.current.value,
                 password: passwordRef.current.value
-            })
-
+            }
         })
 
-        const json = await res.json()
         if (res.status === 409) return setError('Użytkownik o danym loginie już istnieje')
         else if (res.status === 403) return setError('Login bądź hasło jest zbyt krótkie')
         else if (res.status !== 200) return setError('Błędne dane')
         setUser({
-            username: json.username,
+            username: res.json.username,
             admin: false
         })
-        setCookie('token', json.token)
+        setCookie('token', res.json.token)
         navigate('/')
 
     }

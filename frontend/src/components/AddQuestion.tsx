@@ -1,10 +1,12 @@
-import {SyntheticEvent, useRef, useState} from 'react'
+import {FormEvent, useRef, useState} from 'react'
 import {useCookies} from 'react-cookie'
+import fetchUtil from '../utils/fetch'
 
 const AddQuestion = () => {
 
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const [error, setError] = useState<string>('')
+    const [success, setSuccess] = useState<string>('')
     const questionRef = useRef<HTMLInputElement>(null)
     const correctAnswerRef1 = useRef<HTMLInputElement>(null)
     const correctAnswerRef2 = useRef<HTMLInputElement>(null)
@@ -21,10 +23,11 @@ const AddQuestion = () => {
 
     }
 
-    const handleSubmit = async (e: SyntheticEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         setError('')
+        setSuccess('')
 
         const question = questionRef.current?.value as string
         const answers = [
@@ -46,26 +49,22 @@ const AddQuestion = () => {
             }
         ]
 
-        console.log(question)
-        console.log(answers)
-
         if (questionRef.current?.value.length! < 3 || answerRef1.current?.value.length! < 3 || answerRef2.current?.value.length! < 3 || answerRef3.current?.value.length! < 3 || answerRef4.current?.value.length! < 3) return setError('Odpowiedzi jak i pytanie musi mieć minimum 3 znaki')
         if (!correctAnswerRef1.current?.checked && !correctAnswerRef2.current?.checked && !correctAnswerRef3.current?.checked && !correctAnswerRef4.current?.checked) return setError('Nie zaznaczyłeś poprawnej odpowiedzi')
 
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/test/questions`, {
-
+        const res = await fetchUtil('test/questions', {
             method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            body: {
                 question,
                 answers,
                 token: cookies.token
-            })
-
+            }
         })
 
+        if (res.status === 409) return setError('Podane pytanie znajduje się już w bazie')
+        if (res.status !== 200) return setError(res.json.message)
+
+        setSuccess('Pytanie dodano do bazy')
     }
 
     return (
@@ -123,7 +122,15 @@ const AddQuestion = () => {
 
                     {error && (
                         <>
-                        <div className='font-extrabold text-red-500'>Błąd: {error}</div>
+                            <div className='font-extrabold text-red-500'>Błąd: {error}</div>
+                            <br/>
+                            <br/>
+                        </>
+                    )}
+
+                    {success && (
+                        <>
+                            <div className='font-extrabold text-ownGreen'>Sukces: {success}</div>
                             <br/>
                             <br/>
                         </>

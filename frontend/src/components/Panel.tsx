@@ -3,6 +3,7 @@ import userState from '../atoms/userState'
 import {useCookies} from 'react-cookie'
 import {useEffect, useState} from 'react'
 import AddQuestion from './AddQuestion'
+import fetchUtil from '../utils/fetch'
 
 const Panel = () => {
 
@@ -14,22 +15,16 @@ const Panel = () => {
 
         (async () => {
 
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/user/decrypt`, {
-
+            const res = await fetchUtil('user/decrypt', {
                 method: 'post',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+                body: {
                     token: cookies.token
-                })
-
+                }
             })
 
-            const json = await res.json()
             res.status === 200 && setUser({
-                username: json.username,
-                admin: json.admin
+                username: res.json.username,
+                admin: res.json.admin
             })
 
         })()

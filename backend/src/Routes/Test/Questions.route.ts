@@ -2,7 +2,6 @@ import {NextFunction, Request, Response} from 'express'
 import Route, {RouteOutput} from '../../Types/Route.type'
 import QuestionType from '../../Types/Question.type'
 import questionModel from '../../Database/Models/question.model'
-import TokenUtil from '../../Utils/Token.util'
 
 export default class extends Route {
 
@@ -47,6 +46,7 @@ export default class extends Route {
                 '[{answer: string; correct: boolean}[]] answers'
             ],
             mustLogged: true,
+            admin: true,
             async run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput> {
 
                 if (await questionModel.findOne({question: req.body.question}))
@@ -56,19 +56,17 @@ export default class extends Route {
                         }
                     }
 
-                const authorId = (await new TokenUtil().decrypt(req.body.token as string)).userId
-
                 questionModel.create({
                     question: req.body.question,
                     answers: req.body.answers,
-                    authorId
+                    authorId: req.session.user?.userId
                 })
 
                 return {
                     success: {
                         question: req.body.question,
                         answers: req.body.answers,
-                        authorId
+                        authorId: req.session.user?.userId
                     }
                 }
 

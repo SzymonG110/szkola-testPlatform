@@ -2,6 +2,7 @@ import {readdirSync} from 'fs'
 import {Application, NextFunction, Request, Response} from 'express'
 import Route, {RouteOutput} from './Types/Route.type'
 import TokenUtil from './Utils/Token.util'
+import userModel from './Database/Models/user.model'
 
 export default class Handler {
 
@@ -55,9 +56,23 @@ export default class Handler {
                             if (!req.body.token)
                                 return res.status(401).json({message: 'Unauthorized.'})
 
-                            req.session.user = {
-                                ...await new TokenUtil().decrypt(req.body.token),
-                                token: req.body.token
+                            try {
+                                const userId = (await new TokenUtil().decrypt(req.body.token)).userId
+                                const data = await userModel.findOne({userId})
+
+                                if (!data)
+                                    return res.status(401).json({message: 'Unauthorized.'})
+                                if (route.admin && !data.admin)
+                                    return res.status(403).json({message: 'Missing permissions: admin.'})
+
+                                req.session.user = {
+                                    userId,
+                                    username: data?.username as string,
+                                    admin: data?.admin as boolean,
+                                    token: req.body.token
+                                }
+                            } catch (e) {
+                                return res.status(422).json({message: 'Incorrect JWT token.'})
                             }
                         }
 
@@ -65,7 +80,9 @@ export default class Handler {
                             let block = false
                             route.body.forEach(b => {
                                 if (b.startsWith('?')) return
-                                if (!req.body[b.split(' ')[1]]) block = true
+                                const bodyArray = b.split(' ')
+                                const body = bodyArray[bodyArray.length - 1]
+                                if (!req.body[body]) block = true
                             })
                             if (block) return res.status(400).json({
                                 message: 'Missing data in body',
