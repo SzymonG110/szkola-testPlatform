@@ -16,7 +16,7 @@ interface Props {
 
 }
 
-const ManageUser = ({user, setSuccess, setError, setUsers}: Props) => {
+const MapManageUser = ({user, setSuccess, setError, setUsers}: Props) => {
 
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const [userData, setUserData] = useRecoilState(userState)
@@ -76,4 +76,4 @@ const ManageUser = ({user, setSuccess, setError, setUsers}: Props) => {
 
 }
 
-export default ManageUser
+export default MapManageUser

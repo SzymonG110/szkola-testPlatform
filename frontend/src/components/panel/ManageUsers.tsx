@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import fetchUtil from '../../utils/fetch'
 import {useCookies} from 'react-cookie'
-import ManageUser from './ManageUser'
+import MapManageUser from './MapManageUser'
 import {SetterOrUpdater} from 'recoil'
 import UserType from '../../interfaces/User'
 
@@ -35,7 +35,7 @@ const ManageUsers = () => {
             {success && (<div className='font-extrabold text-ownGreen'>Sukces: {success}</div>)}
             {error && (<div className='font-extrabold text-red-500'>Błąd: {error}</div>)}
             {users.map((user: UserType, index) => (
-                <ManageUser user={user} key={index} setError={setError} setSuccess={setSuccess} setUsers={setUsers}/>
+                <MapManageUser user={user} key={index} setError={setError} setSuccess={setSuccess} setUsers={setUsers}/>
             ))}
         </div>
     )
