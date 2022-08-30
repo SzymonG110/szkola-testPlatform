@@ -58,17 +58,17 @@ export default class Handler {
 
                             try {
                                 const userId = (await new TokenUtil().decrypt(req.headers.token as string)).userId
-                                const data = await userModel.findOne({userId})
+                                const data = await userModel.findOne({userId, deleted: false})
 
                                 if (!data)
                                     return res.status(401).json({message: 'Unauthorized.'})
-                                if (route.admin && !data.admin)
+                                if (route.admin && data.role !== 'admin')
                                     return res.status(403).json({message: 'Missing permissions: admin.'})
 
                                 req.session.user = {
                                     userId,
                                     username: data?.username as string,
-                                    admin: data?.admin as boolean,
+                                    role: data?.role,
                                     token: req.headers.token as string
                                 }
                             } catch (e) {

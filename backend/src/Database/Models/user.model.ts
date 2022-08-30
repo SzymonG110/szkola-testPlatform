@@ -15,8 +15,12 @@ const userModel = model<UserType>('user', new Schema({
         type: String, required: true
     },
 
-    admin: {
+    deleted: {
         type: Boolean, default: false
+    },
+
+    role: {
+        type: String, default: 'user'
     }
 
 }))

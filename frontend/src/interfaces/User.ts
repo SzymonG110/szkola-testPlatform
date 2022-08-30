@@ -1,7 +1,9 @@
+export const roles: UserType['role'][] = ['user', 'admin']
+
 export default interface UserType {
 
     userId: number
-    admin: boolean
     username: string
+    role: 'user' | 'admin'
 
 }

@@ -11,7 +11,7 @@ const Navbar = () => {
     const logout = () => {
         setUser({
             username: undefined,
-            admin: false
+            role: undefined
         })
         removeCookie('token')
     }
@@ -20,8 +20,10 @@ const Navbar = () => {
         <div className='flex p-3 font-semibold bg-ownBlue text-white mb-0.5'>
             <div className='flex justify-start w-full space-x-5'>
                 <Link to='/' className='cursor-pointer hover:text-ownBlueHover duration-500'>Strona główna</Link>
-                {user.username && (<Link to='/panel'
-                                         className='cursor-pointer hover:text-ownBlueHover duration-500'>{user.username}</Link>)}
+                {user.username && (
+                    <Link to='/panel'
+                          className='cursor-pointer hover:text-ownBlueHover duration-500'>{user.username}</Link>
+                )}
             </div>
 
             <div className='flex justify-end w-full'>

@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from 'express'
 import Route, {RouteOutput} from '../../Types/Route.type'
 import userModel from '../../Database/Models/user.model'
-import UserType from '../../Types/User.type'
+import UserType, {roles} from '../../Types/User.type'
 import {hash} from 'bcrypt'
 
 export default class extends Route {
@@ -38,11 +38,11 @@ export default class extends Route {
             mustLogged: true,
             admin: true,
             body: [
+                '[string] userId',
                 '?[string] username',
                 '?[string] password',
                 '?[boolean] deleted',
-                '?[boolean] admin',
-                '[string] userId'
+                '?[string] role'
             ],
             async run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput> {
 
@@ -52,6 +52,7 @@ export default class extends Route {
 
                 if (req.body.username && req.body.username.length >= 3) toUpdate['username'] = req.body.username
                 if (req.body.password && req.body.password.length >= 3) toUpdate['password'] = await hash(req.body.password, 10)
+                if (req.body.role && roles.includes(req.body.role)) toUpdate['role'] = req.body.role
                 toUpdate['deleted'] = !!req.body.deleted
 
                 const user = await userModel.findOneAndUpdate({

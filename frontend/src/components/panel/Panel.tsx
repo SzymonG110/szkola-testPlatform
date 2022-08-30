@@ -17,12 +17,12 @@ const Panel = () => {
 
             const res = await fetchUtil('user/decrypt', {
                 method: 'post',
-                token: cookies.token,
+                token: cookies.token
             })
 
             res.status === 200 && setUser({
                 username: res.json.username,
-                admin: res.json.admin
+                role: res.json.role
             })
 
         })()

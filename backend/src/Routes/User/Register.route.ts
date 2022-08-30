@@ -48,9 +48,9 @@ export default class extends Route {
                         token: await new TokenUtil().generate({
                             userId: userId,
                             username: req.body.username,
-                            admin: false
+                            role: 'user'
                         }),
-                        admin: false
+                        role: 'user'
                     }
 
                 }

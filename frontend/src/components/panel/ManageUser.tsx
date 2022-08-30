@@ -1,5 +1,7 @@
 import UserType from '../../interfaces/User'
 import ModityUser from './ModityUser'
+import fetchUtil from '../../utils/fetch'
+import {useCookies} from 'react-cookie'
 
 interface Props {
     user: UserType
@@ -7,11 +9,27 @@ interface Props {
 
 const ManageUser = ({user}: Props) => {
 
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
+
     const handleModifyUser = async () => {
+
         document.getElementById(`modalModifyUser${user.userId}`)?.classList.remove('hidden')
+
     }
     const handleDeleteUser = async () => {
-        console.log(user.userId)
+
+        const res = await fetchUtil('admin/users', {
+            method: 'post',
+            token: cookies.token,
+            body: {
+                userId: user.userId,
+                deleted: true
+            }
+        })
+
+        if (res.status !== 200) return console.log(res.json.message)
+        console.log('Usunięto')
+
     }
 
     return (
@@ -21,8 +39,8 @@ const ManageUser = ({user}: Props) => {
 
             <h4 className='inline-table'>
                 {user.userId}. {user.username}
-                <div className={(user.admin ? 'text-red-500' : 'text-ownGreen') + ' inline'}>
-                    {user.admin ? ' Administrator' : ' Użytkownik'}
+                <div className={(user.role === 'admin' ? 'text-red-500' : 'text-ownGreen') + ' inline'}>
+                    {user.role === 'admin' ? ' Administrator' : ' Użytkownik'}
                 </div>
             </h4>
             <div className='inline-flex'>

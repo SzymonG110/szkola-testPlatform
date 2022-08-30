@@ -29,7 +29,7 @@ function App() {
 
             res.status === 200 && setUser({
                 username: res.json.username,
-                admin: res.json.admin
+                role: res.json.role
             })
 
         })()
@@ -46,7 +46,7 @@ function App() {
                     </>
                     : <>
                         <Route path='/test' element={<Test/>}/>
-                        {user.admin && (
+                        {user.role === 'admin' && (
                             <>
                                 <Route path='/panel/users' element={<ManageUsers/>}/>
                                 <Route path='/panel' element={<Panel/>}/>

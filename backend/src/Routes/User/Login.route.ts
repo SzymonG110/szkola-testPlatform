@@ -35,9 +35,9 @@ export default class extends Route {
                         token: await new TokenUtil().generate({
                             userId: data.userId,
                             username: data.username,
-                            admin: data.admin
+                            role: data.role
                         }),
-                        admin: data.admin
+                        role: data.role
                     }
 
                 }
