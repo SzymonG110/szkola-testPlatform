@@ -32,7 +32,8 @@ const Login = () => {
         if (res.status !== 200) return setError('Błędne dane')
         setUser({
             username: res.json.username,
-            admin: res.json.admin
+            role: res.json.role,
+            userId: res.json.userId
         })
         setCookie('token', res.json.token)
         navigate('/')
@@ -40,13 +41,15 @@ const Login = () => {
     }
 
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center items-center fixed h-screen w-screen'>
             <form onSubmit={handleSubmit} className='grid justify-items-center'>
                 Login: <input type='text' ref={loginRef}
-                              className='border border-gray-300 block bg-gray-50 rounded-xl px-1' placeholder='Login'/>
+                              className='border border-gray-300 block bg-gray-50 rounded px-3 py-1'
+                              placeholder='Login'/>
                 <br/>
                 Hasło: <input type='password' ref={passwordRef}
-                              className='border border-gray-300 block bg-gray-50 rounded-xl px-1' placeholder='Hasło'/>
+                              className='border border-gray-300 block bg-gray-50 rounded px-3 py-1'
+                              placeholder='Hasło'/>
                 <br/>
                 <input type='submit'
                        className='font-extrabold ml-2 bg-ownGreen hover:bg-ownGreenHover py-2 px-3 rounded-xl text-black transition-colors duration-500'/>

@@ -19,7 +19,7 @@ const Register = () => {
 
         e.preventDefault()
 
-        if (!loginRef.current?.value || !passwordRef.current?.value) return setError('Uzupełnij pola')
+        if (!loginRef.current?.value || !passwordRef.current?.value || !confirmPasswordRef.current?.value || passwordRef.current?.value !== confirmPasswordRef.current?.value) return setError('Uzupełnij pola')
         setError('')
 
         const res = await fetchUtil('user/register', {
@@ -35,7 +35,8 @@ const Register = () => {
         else if (res.status !== 200) return setError('Błędne dane')
         setUser({
             username: res.json.username,
-            admin: false
+            role: res.json.role,
+            userId: res.json.userId
         })
         setCookie('token', res.json.token)
         navigate('/')
@@ -43,16 +44,16 @@ const Register = () => {
     }
 
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center items-center fixed h-screen w-screen'>
             <form onSubmit={handleSubmit} className='grid justify-items-center'>
                 Login: <input type='text' ref={loginRef}
-                              className='border border-gray-300 block bg-gray-50 rounded-xl px-1' placeholder='Login'/>
+                              className='border border-gray-300 block bg-gray-50 rounded px-3 py-1' placeholder='Login'/>
                 <br/>
                 Hasło: <input type='password' ref={passwordRef}
-                              className='border border-gray-300 block bg-gray-50 rounded-xl px-1' placeholder='Hasło'/>
+                              className='border border-gray-300 block bg-gray-50 rounded px-3 py-1' placeholder='Hasło'/>
                 <br/>
                 Potwierdź hasło: <input type='password' ref={confirmPasswordRef}
-                                        className='border border-gray-300 block bg-gray-50 rounded-xl px-1'
+                                        className='border border-gray-300 block bg-gray-50 rounded px-3 py-1'
                                         placeholder='Hasło'/>
                 <br/>
                 <input type='submit'

@@ -29,7 +29,8 @@ function App() {
 
             res.status === 200 && setUser({
                 username: res.json.username,
-                role: res.json.role
+                role: res.json.role,
+                userId: res.json.userId
             })
 
         })()

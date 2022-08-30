@@ -11,7 +11,8 @@ const Navbar = () => {
     const logout = () => {
         setUser({
             username: undefined,
-            role: undefined
+            role: undefined,
+            userId: undefined
         })
         removeCookie('token')
     }

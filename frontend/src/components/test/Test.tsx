@@ -88,11 +88,11 @@ const Test = () => {
 
                     {questions.length - 1 === index ? (
                         <button onClick={handleEndTest}
-                                className='cursor-pointer bg-ownGreen hover:bg-ownGreenHover duration-500 rounded-2xl py-2 px-3 hover:text-white'>Zakończ
+                                className='font-extrabold bg-ownGreen hover:bg-ownGreenHover py-2 px-3 rounded-xl duration-500'>Zakończ
                             test</button>
                     ) : (
                         <button onClick={handleNextQuestion}
-                                className='cursor-pointer bg-ownGreen hover:bg-ownGreenHover duration-500 rounded-2xl py-2 px-3 hover:text-white'>Następne
+                                className='font-extrabold bg-ownGreen hover:bg-ownGreenHover py-2 px-3 rounded-xl duration-500'>Następne
                             pytanie</button>
                     )}
 

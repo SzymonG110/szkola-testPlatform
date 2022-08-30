@@ -62,7 +62,7 @@ const AddQuestion = () => {
         })
 
         if (res.status === 409) return setError('Podane pytanie znajduje się już w bazie')
-        if (res.status !== 200) return setError(res.json.message)
+        else if (res.status !== 200) return setError(res.json.message)
 
         setSuccess('Pytanie dodano do bazy')
     }

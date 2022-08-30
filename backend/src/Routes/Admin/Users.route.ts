@@ -46,6 +46,23 @@ export default class extends Route {
             ],
             async run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput> {
 
+                // console.log(req.body)
+                // console.log(req.session.user)
+                // console.log(await userModel.findOne({
+                //     username: req.body.username,
+                //     deleted: false
+                // }))
+
+                if (await userModel.findOne({username: req.body.username, deleted: false}) &&
+                    (await userModel.findOne({
+                        username: req.body.username,
+                        deleted: false
+                    }))?.userId !== req.body.userId) return {
+                    error: {
+                        code: 409, message: 'Duplicated username'
+                    }
+                }
+
                 let toUpdate: any = {
                     userId: req.body.userId
                 }

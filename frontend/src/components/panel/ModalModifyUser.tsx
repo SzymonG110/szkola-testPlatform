@@ -37,9 +37,10 @@ const ModifyUser = ({user}: Props) => {
             }
         })
 
-        if (res.status !== 200) return setError(res.json.message)
-
+        if (res.status === 409) return setError('Osoba o tej nazwie użytkownika już istnieje')
+        else if (res.status !== 200) return setError(res.json.message)
         setSuccess('Modyfikowano dane użytkownika')
+
     }
 
     return (
@@ -66,7 +67,7 @@ const ModifyUser = ({user}: Props) => {
                            placeholder='Nowe hasło użytkownika'/>
 
                     <input type='submit'
-                           className='font-extrabold bg-ownGreen hover:bg-ownGreenHover py-2 px-3 rounded-xl text-black transition-colors duration-500 absolute bottom-3 right-3'/>
+                           className='font-extrabold bg-ownGreen hover:bg-ownGreenHover py-2 px-3 rounded-xl duration-500 absolute bottom-3 right-3'/>
 
                     {error && (
                         <>

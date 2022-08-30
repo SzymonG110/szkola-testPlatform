@@ -8,7 +8,7 @@ const userModel = model<UserType>('user', new Schema({
     },
 
     username: {
-        type: String, required: true, unique: true
+        type: String, required: true
     },
 
     password: {
