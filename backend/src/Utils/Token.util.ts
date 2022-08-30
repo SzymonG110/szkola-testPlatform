@@ -6,7 +6,7 @@ export default class TokenUtil {
     private JWT_KEY: string = 'xFC6DYSQ6aGCRfeDgEfzNbm3Wb6Uya2Fovcy9IJ8KPmODv4chH'
     private key: Uint8Array = new Uint8Array(Buffer.from(this.JWT_KEY)).slice(0, 32)
 
-    public async generate(data: Omit<UserType, 'password'>): Promise<string> {
+    public async generate(data: Omit<UserType, 'password' | 'deleted'>): Promise<string> {
 
         return await new EncryptJWT({data})
             .setProtectedHeader({alg: 'A256GCMKW', enc: 'A256CBC-HS512'})
@@ -17,7 +17,7 @@ export default class TokenUtil {
 
     }
 
-    public async decrypt(token: string): Promise<Omit<UserType, 'password'>> {
+    public async decrypt(token: string): Promise<Omit<UserType, 'password' | 'deleted'>> {
 
         return (await jwtDecrypt(token, this.key, {
             issuer: 'schoolTestPlatformBySzymon'

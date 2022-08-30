@@ -5,12 +5,13 @@ import {useCookies} from 'react-cookie'
 import fetchUtil from './utils/fetch'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
-import Login from './components/Login'
-import Register from './components/Register'
-import Test from './components/Test'
+import Login from './components/auth/Login'
+import Register from './components/auth/Register'
+import Test from './components/test/Test'
 import userState from './atoms/userState'
-import Questions from './components/Questions'
-import Panel from './components/Panel'
+import Questions from './components/test/Questions'
+import Panel from './components/panel/Panel'
+import ManageUsers from './components/panel/ManageUsers'
 
 function App() {
 
@@ -23,9 +24,7 @@ function App() {
 
             const res = await fetchUtil('user/decrypt', {
                 method: 'post',
-                body: {
-                    token: cookies.token
-                }
+                token: cookies.token
             })
 
             res.status === 200 && setUser({
@@ -47,7 +46,12 @@ function App() {
                     </>
                     : <>
                         <Route path='/test' element={<Test/>}/>
-                        {user.admin && (<Route path='/panel' element={<Panel/>}/>)}
+                        {user.admin && (
+                            <>
+                                <Route path='/panel/users' element={<ManageUsers/>}/>
+                                <Route path='/panel' element={<Panel/>}/>
+                            </>
+                        )}
                     </>
                 }
 

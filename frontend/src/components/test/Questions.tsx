@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
-import {QuestionType} from '../interfaces/Question'
-import fetchUtil from '../utils/fetch'
+import {QuestionType} from '../../interfaces/Question'
+import fetchUtil from '../../utils/fetch'
 
 const Questions = () => {
 

@@ -43,7 +43,7 @@ export default class extends Route {
             method: 'post',
             body: [
                 '[string] question',
-                '[{answer: string; correct: boolean}[]] answers'
+                '[{answer: string | correct: boolean}[]] answers'
             ],
             mustLogged: true,
             admin: true,

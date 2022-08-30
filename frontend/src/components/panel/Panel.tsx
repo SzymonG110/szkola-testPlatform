@@ -1,14 +1,14 @@
 import {useRecoilState} from 'recoil'
-import userState from '../atoms/userState'
+import userState from '../../atoms/userState'
 import {useCookies} from 'react-cookie'
-import {useEffect, useState} from 'react'
+import {useEffect} from 'react'
 import AddQuestion from './AddQuestion'
-import fetchUtil from '../utils/fetch'
+import fetchUtil from '../../utils/fetch'
+import {Link} from 'react-router-dom'
 
 const Panel = () => {
 
     const [user, setUser] = useRecoilState(userState)
-    const [modalAddQuestionOpen, setModalAddQuestionOpen] = useState<boolean>(false)
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
 
     useEffect(() => {
@@ -17,9 +17,7 @@ const Panel = () => {
 
             const res = await fetchUtil('user/decrypt', {
                 method: 'post',
-                body: {
-                    token: cookies.token
-                }
+                token: cookies.token,
             })
 
             res.status === 200 && setUser({
@@ -40,7 +38,13 @@ const Panel = () => {
     return (
         <div>
             <AddQuestion/>
-            <div onClick={handleModalOpen}>Dodaj pytanie</div>
+            <div>
+                <div onClick={handleModalOpen} className='cursor-pointer hover:text-ownBlueHover duration-500'>Dodaj
+                    pytanie
+                </div>
+                <Link to='/panel/users' className='cursor-pointer hover:text-ownBlueHover duration-500'>Zarządzaj
+                    użytkownikami</Link>
+            </div>
         </div>
     )
 

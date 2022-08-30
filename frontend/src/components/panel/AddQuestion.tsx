@@ -1,6 +1,6 @@
 import {FormEvent, useRef, useState} from 'react'
 import {useCookies} from 'react-cookie'
-import fetchUtil from '../utils/fetch'
+import fetchUtil from '../../utils/fetch'
 
 const AddQuestion = () => {
 
@@ -54,10 +54,10 @@ const AddQuestion = () => {
 
         const res = await fetchUtil('test/questions', {
             method: 'post',
+            token: cookies.token,
             body: {
                 question,
-                answers,
-                token: cookies.token
+                answers
             }
         })
 
@@ -71,7 +71,7 @@ const AddQuestion = () => {
         <div className='hidden w-screen h-screen fixed top-0 left-0 grid place-content-center' id='modalAddQuestion'>
             <div className='relative w-96 min-w-max bg-amber-300 p-3 z-20'>
                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5'
-                     stroke="currentColor" className='w-8 h-8 text-red-500 absolute top-3 right-3'
+                     stroke='currentColor' className='w-8 h-8 text-red-500 absolute top-3 right-3'
                      onClick={handleCloseModal}>
                     <path strokeLinecap='round' strokeLinejoin='round' d='M6 18L18 6M6 6l12 12'/>
                 </svg>

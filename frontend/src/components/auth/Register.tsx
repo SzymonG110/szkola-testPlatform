@@ -1,17 +1,18 @@
 import {FormEvent, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useRecoilState} from 'recoil'
-import userState from '../atoms/userState'
+import userState from '../../atoms/userState'
 import {useCookies} from 'react-cookie'
-import fetchUtil from '../utils/fetch'
+import fetchUtil from '../../utils/fetch'
 
-const Login = () => {
+const Register = () => {
 
     const loginRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
+    const confirmPasswordRef = useRef<HTMLInputElement>(null)
     const [error, setError] = useState<string>('')
-    const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const [user, setUser] = useRecoilState(userState)
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const navigate = useNavigate()
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -21,7 +22,7 @@ const Login = () => {
         if (!loginRef.current?.value || !passwordRef.current?.value) return setError('Uzupełnij pola')
         setError('')
 
-        const res = await fetchUtil('user/login', {
+        const res = await fetchUtil('user/register', {
             method: 'post',
             body: {
                 username: loginRef.current.value,
@@ -29,10 +30,12 @@ const Login = () => {
             }
         })
 
-        if (res.status !== 200) return setError('Błędne dane')
+        if (res.status === 409) return setError('Użytkownik o danym loginie już istnieje')
+        else if (res.status === 403) return setError('Login bądź hasło jest zbyt krótkie')
+        else if (res.status !== 200) return setError('Błędne dane')
         setUser({
             username: res.json.username,
-            admin: res.json.admin
+            admin: false
         })
         setCookie('token', res.json.token)
         navigate('/')
@@ -48,6 +51,10 @@ const Login = () => {
                 Hasło: <input type='password' ref={passwordRef}
                               className='border border-gray-300 block bg-gray-50 rounded-xl px-1' placeholder='Hasło'/>
                 <br/>
+                Potwierdź hasło: <input type='password' ref={confirmPasswordRef}
+                                        className='border border-gray-300 block bg-gray-50 rounded-xl px-1'
+                                        placeholder='Hasło'/>
+                <br/>
                 <input type='submit'
                        className='font-extrabold ml-2 bg-ownGreen hover:bg-ownGreenHover py-2 px-3 rounded-xl text-black transition-colors duration-500'/>
 
@@ -58,4 +65,4 @@ const Login = () => {
 
 }
 
-export default Login
+export default Register

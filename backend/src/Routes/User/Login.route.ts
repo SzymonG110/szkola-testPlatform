@@ -22,7 +22,7 @@ export default class extends Route {
 
                 if (!req.session.user?.userId) {
 
-                    const data = await userModel.findOne({username: req.body.username})
+                    const data = await userModel.findOne({username: req.body.username, deleted: false})
                     if (!data || !await compare(req.body.password, data.password)) return {
                         error: {
                             code: 403, message: 'Incorrect login or password'

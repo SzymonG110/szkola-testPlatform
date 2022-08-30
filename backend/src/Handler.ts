@@ -52,12 +52,12 @@ export default class Handler {
             routes.methods.forEach(route => {
                 this.app[route.method](routes.route, async (req: Request, res: Response, next: NextFunction) => {
 
-                        if (route.mustLogged && !req.session.user) {
-                            if (!req.body.token)
+                        if (route.mustLogged && !req.headers.user) {
+                            if (!req.headers.token)
                                 return res.status(401).json({message: 'Unauthorized.'})
 
                             try {
-                                const userId = (await new TokenUtil().decrypt(req.body.token)).userId
+                                const userId = (await new TokenUtil().decrypt(req.headers.token as string)).userId
                                 const data = await userModel.findOne({userId})
 
                                 if (!data)
@@ -69,7 +69,7 @@ export default class Handler {
                                     userId,
                                     username: data?.username as string,
                                     admin: data?.admin as boolean,
-                                    token: req.body.token
+                                    token: req.headers.token as string
                                 }
                             } catch (e) {
                                 return res.status(422).json({message: 'Incorrect JWT token.'})

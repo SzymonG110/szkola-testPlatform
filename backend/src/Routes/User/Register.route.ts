@@ -28,7 +28,7 @@ export default class extends Route {
                         }
                     }
 
-                    const data = await userModel.findOne({username: req.body.username})
+                    const data = await userModel.findOne({username: req.body.username, deleted: false})
                     if (data) return {
                         error: {
                             code: 409, message: 'User with this username already exists'

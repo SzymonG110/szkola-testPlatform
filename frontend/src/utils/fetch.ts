@@ -1,7 +1,7 @@
 interface FetchType {
     method: 'get' | 'post'
+    token?: string,
     body?: {
-        token?: string,
         [x: string]: any
     }
 }
@@ -13,7 +13,8 @@ const fetchUtil = async (endpoint: string, options: FetchType) => {
         res = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
             method: options.method,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'token': options?.token as string
             },
             body: JSON.stringify({
                 ...options.body
@@ -21,7 +22,10 @@ const fetchUtil = async (endpoint: string, options: FetchType) => {
         })
     else
         res = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
-            method: options.method
+            method: options.method,
+            headers: {
+                'token': options?.token as string
+            }
         })
 
     return {
