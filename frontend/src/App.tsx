@@ -1,6 +1,7 @@
 import {useEffect} from 'react'
 import {Route, Routes} from 'react-router-dom'
 import {useRecoilState} from 'recoil'
+import userState from './atoms/userState'
 import {useCookies} from 'react-cookie'
 import fetchUtil from './utils/fetch'
 import Navbar from './components/Navbar'
@@ -8,10 +9,10 @@ import Home from './components/Home'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Test from './components/test/Test'
-import userState from './atoms/userState'
 import Questions from './components/test/Questions'
 import Panel from './components/panel/Panel'
 import ManageUsers from './components/panel/ManageUsers'
+import Stats from './components/test/Stats'
 
 function App() {
 
@@ -57,6 +58,7 @@ function App() {
                 }
 
                 <Route path='/questions' element={<Questions/>}/>
+                <Route path='/stats' element={<Stats/>}/>
                 <Route path='/*' element={<Home/>}/>
             </Routes>
         </div>

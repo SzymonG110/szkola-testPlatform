@@ -1,7 +1,7 @@
 import {model, Schema} from 'mongoose'
 import UserType from '../../Types/User.type'
 
-const userModel = model<UserType>('user', new Schema({
+const userModel = model<UserType>('user', new Schema<UserType>({
 
     userId: {
         type: Number, required: true, unique: true

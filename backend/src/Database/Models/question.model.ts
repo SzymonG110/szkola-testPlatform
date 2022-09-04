@@ -1,7 +1,7 @@
 import {model, Schema} from 'mongoose'
 import QuestionType from '../../Types/Question.type'
 
-const questionModel = model<QuestionType>('question', new Schema({
+const questionModel = model<QuestionType>('question', new Schema<QuestionType>({
 
     question: {
         type: String, unique: true, required: true

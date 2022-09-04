@@ -1,9 +1,11 @@
 import {ChangeEvent, useEffect, useState} from 'react'
 import {AnswerType, QuestionType} from '../../interfaces/Question'
 import fetchUtil from '../../utils/fetch'
+import {useCookies} from "react-cookie";
 
 const Test = () => {
 
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const [error, setError] = useState<string>('')
     const [questions, setQuestions] = useState<QuestionType[]>([])
     const [index, setIndex] = useState<number>(0)
@@ -30,9 +32,17 @@ const Test = () => {
 
     }
 
-    const handleEndTest = () => {
+    const handleEndTest = async () => {
 
         if (!checkIfAnswer()) return
+
+        const x = await fetchUtil('test/stats', {
+            method: 'post',
+            token: cookies.token,
+            body: {
+                percent: answers.filter((a, filterIndex) => a.answer === questions[filterIndex].answers.find(a => a.correct)?.answer).length / questions.length * 100
+            }
+        })
 
         setEnd(true)
 

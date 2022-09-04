@@ -82,7 +82,10 @@ export default class Handler {
                                 if (b.startsWith('?')) return
                                 const bodyArray = b.split(' ')
                                 const body = bodyArray[bodyArray.length - 1]
-                                if (!req.body[body]) block = true
+                                if (!Object.keys(req.body).includes(body)) {
+                                    process.argv.includes('--debug') && console.log(body)
+                                    block = true
+                                }
                             })
                             if (block) return res.status(400).json({
                                 message: 'Missing data in body',
