@@ -7,7 +7,7 @@ import IndexDatabase from './Database/Index.database'
 export class Index {
 
     app: ex.Express = ex()
-    port: number = 8006
+    port: number = 8007
     secret: string = 'OIHUmouINu8JioMHEYIumbBUMuiAMmĆuyiDnuyInyuNSbiuyAuyi'
 
     constructor() {
