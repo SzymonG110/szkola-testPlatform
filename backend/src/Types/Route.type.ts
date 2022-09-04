@@ -48,8 +48,7 @@ export default abstract class Route {
     route: string = '/'
     methods: {
 
-        method: 'get' | 'post'
-        permissions?: Permissions[]
+        method: 'get' | 'post' | 'delete'
         mustLogged?: boolean
         admin?: boolean
         body?: string[]

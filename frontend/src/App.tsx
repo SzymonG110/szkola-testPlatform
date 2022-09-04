@@ -12,7 +12,6 @@ import userState from './atoms/userState'
 import Questions from './components/test/Questions'
 import Panel from './components/panel/Panel'
 import ManageUsers from './components/panel/ManageUsers'
-import ManageQuestions from './components/panel/ManageQuestions'
 
 function App() {
 
@@ -51,7 +50,6 @@ function App() {
                         {user.role === 'admin' && (
                             <>
                                 <Route path='/panel/users' element={<ManageUsers/>}/>
-                                <Route path='/panel/questions' element={<ManageQuestions/>}/>
                                 <Route path='/panel' element={<Panel/>}/>
                             </>
                         )}

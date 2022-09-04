@@ -2,6 +2,7 @@ import {NextFunction, Request, Response} from 'express'
 import Route, {RouteOutput} from '../../Types/Route.type'
 import QuestionType from '../../Types/Question.type'
 import questionModel from '../../Database/Models/question.model'
+import QuestionModel from "../../Database/Models/question.model";
 
 export default class extends Route {
 
@@ -67,6 +68,37 @@ export default class extends Route {
                         question: req.body.question,
                         answers: req.body.answers,
                         authorId: req.session.user?.userId
+                    }
+                }
+
+            }
+
+        })
+
+        this.methods.push({
+
+            method: 'delete',
+            mustLogged: true,
+            admin: true,
+            body: [
+                '[string] question'
+            ],
+            async run(req: Request, res: Response, next: NextFunction): Promise<RouteOutput> {
+
+                const question = await QuestionModel.findOneAndDelete({
+                    question: req.body.question
+                })
+
+                if (!question) return {
+                    error: {
+                        code: 404, message: 'Question not found.'
+                    }
+                }
+
+                return {
+                    success: {
+                        question: question.question,
+                        deleted: true
                     }
                 }
 

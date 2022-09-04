@@ -1,5 +1,5 @@
 interface FetchType {
-    method: 'get' | 'post'
+    method: 'get' | 'post' | 'delete'
     token?: string,
     body?: {
         [x: string]: any

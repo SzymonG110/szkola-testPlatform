@@ -58,12 +58,12 @@ const ModifyUser = ({user}: Props) => {
                 <form onSubmit={handleSubmit}>
                     <h4>Nazwa użytkownika</h4>
                     <input type='text' value={username}
-                           className='border border-gray-300 block bg-gray-50 rounded-xl px-1 my-1'
+                           className='border border-gray-300 block bg-gray-50 rounded px-3 py-1'
                            placeholder='Nazwa użytkownika' onChange={(e) => setUsername(e.target.value)}/>
 
                     <h4>Nowe hasło użytkownika</h4>
                     <input type='text' ref={passwordRef}
-                           className='border border-gray-300 block bg-gray-50 rounded-xl px-1 my-1'
+                           className='border border-gray-300 block bg-gray-50 rounded px-3 py-1'
                            placeholder='Nowe hasło użytkownika'/>
 
                     <input type='submit'

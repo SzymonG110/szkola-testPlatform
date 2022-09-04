@@ -68,7 +68,8 @@ const AddQuestion = () => {
     }
 
     return (
-        <div className='hidden w-screen h-screen fixed top-0 left-0 grid place-content-center' id='modalAddQuestion'>
+        <div className='hidden w-screen h-screen fixed top-0 left-0 grid place-content-center bg-black/50'
+             id='modalAddQuestion'>
             <div className='relative w-96 min-w-max bg-amber-300 p-3 z-20'>
                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5'
                      stroke='currentColor' className='w-8 h-8 text-red-500 absolute top-3 right-3'
@@ -81,13 +82,13 @@ const AddQuestion = () => {
                 <form onSubmit={handleSubmit}>
                     <h4>Pytanie:</h4>
                     <input type='text' ref={questionRef}
-                           className='border border-gray-300 block bg-gray-50 rounded-xl px-1 my-1'
+                           className='border border-gray-300 block bg-gray-50 rounded px-3 py-1'
                            placeholder='Pytanie'/>
 
                     <h4>Odpowiedzi:</h4>
                     <div>
                         <input type='text' ref={answerRef1}
-                               className='border border-gray-300 bg-gray-50 rounded-xl px-1 my-1'
+                               className='border border-gray-300 bg-gray-50 rounded px-3 py-1'
                                placeholder='Odpowiedź'/>
                         <input type='radio' ref={correctAnswerRef1} name='correctAnswer' id='answer1'
                                className='border border-gray-300 bg-gray-50 rounded-xl ml-1'/>
@@ -95,7 +96,7 @@ const AddQuestion = () => {
 
                     <div>
                         <input type='text' ref={answerRef2}
-                               className='border border-gray-300 bg-gray-50 rounded-xl px-1 my-1'
+                               className='border border-gray-300 bg-gray-50 rounded px-3 py-1'
                                placeholder='Odpowiedź'/>
                         <input type='radio' ref={correctAnswerRef2} name='correctAnswer' id='answer2'
                                className='border border-gray-300 bg-gray-50 rounded-xl ml-1'/>
@@ -103,7 +104,7 @@ const AddQuestion = () => {
 
                     <div>
                         <input type='text' ref={answerRef3}
-                               className='border border-gray-300 bg-gray-50 rounded-xl px-1 my-1'
+                               className='border border-gray-300 bg-gray-50 rounded px-3 py-1'
                                placeholder='Odpowiedź'/>
                         <input type='radio' ref={correctAnswerRef3} name='correctAnswer' id='answer3'
                                className='border border-gray-300 bg-gray-50 rounded-xl ml-1'/>
@@ -111,7 +112,7 @@ const AddQuestion = () => {
 
                     <div>
                         <input type='text' ref={answerRef4}
-                               className='border border-gray-300 bg-gray-50 rounded-xl px-1 my-1'
+                               className='border border-gray-300 bg-gray-50 rounded px-3 py-1'
                                placeholder='Odpowiedź'/>
                         <input type='radio' ref={correctAnswerRef4} name='correctAnswer' id='answer4'
                                className='border border-gray-300 bg-gray-50 rounded-xl ml-1'/>
